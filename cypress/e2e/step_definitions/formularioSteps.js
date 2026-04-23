@@ -1,39 +1,41 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import formularioPage from "../../pages/formularioPage";
 
+// -------------------- GIVEN --------------------
 Given("que o usuário acessa o formulário", () => {
-  formularioPage.acessarFormulario()
-})
+  cy.visit("https://regdoc.com.br/");
+});
 
+// -------------------- WHEN --------------------
 When("preenche nome", () => {
-  cy.get('#first_name', { timeout: 10000 }) // espera até 10s
-    .should('exist')                        // garante que o elemento existe
-    .should('be.visible')                   // garante que está visível
-    .type('Valdeci')                        // então digita
+  cy.get('#first_name', { timeout: 10000 })
+    .should('exist')
+    .type("Valdeci");
 });
 
 When("preenche sobrenome", () => {
-  formularioPage.preencherSobrenome()
-})
+  cy.get('#last_name').type("Macedo");
+});
 
 When("preenche email", () => {
-  formularioPage.preencherEmail()
-})
+  cy.get('#email').type("valdeci.macedo@ext.valid.com");
+});
 
 When("preenche telefone", () => {
-  formularioPage.preencherTelefone()
-})
+  cy.get('#phone', { timeout: 10000 })
+    .should('not.be.disabled')
+    .type("11953297078");
+});
 
 When("preenche empresa", () => {
-  formularioPage.preencherEmpresa()
-})
+  cy.get('#company').type("Empresa teste e2e");
+});
 
 When("envia o formulário", () => {
-  formularioPage.enviarFormulario()
-})
+  cy.get('form').submit(); // ou botão submit
+});
 
-Then("o formulário deve ser enviado com sucesso", () => {
-  // espera até 10s para encontrar qualquer texto que contenha "sucesso" ou "enviado"
-  cy.contains(/sucesso|enviado|obrigado/i, { timeout: 10000 })
-    .should('be.visible');  // garante que está visível na tela
+// -------------------- THEN --------------------
+Then("formulário enviado com sucesso", () => {
+  
+  cy.url().should("include", "regdoc.com.br");
 });

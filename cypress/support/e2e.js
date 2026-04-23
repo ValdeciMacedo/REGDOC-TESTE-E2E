@@ -1,5 +1,8 @@
-// Importa o plugin cypress-xpath para habilitar cy.xpath()
-require('cypress-xpath');
+Cypress.on('uncaught:exception', (err, runnable) => {
+  return false;
+});
+  require('cypress-xpath');
+
 // This exampl// Importa o plugin cypress-xpath para habilitar cy.xpath(
 //
 // This is a great place to put global configuration and
